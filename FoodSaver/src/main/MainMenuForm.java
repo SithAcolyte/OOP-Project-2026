@@ -40,6 +40,7 @@ public class MainMenuForm extends javax.swing.JFrame {
         collectionsBtn.addActionListener(this::collectionsBtnActionPerformed);
 
         userDonationsBtn.setText("Users & Donations - Person 3");
+        userDonationsBtn.addActionListener(this::userDonationsBtnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,6 +72,13 @@ public class MainMenuForm extends javax.swing.JFrame {
     private void collectionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectionsBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_collectionsBtnActionPerformed
+
+    private void userDonationsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDonationsBtnActionPerformed
+        users.RegisterUserForm userForm = new users.RegisterUserForm(); //to create users registration window
+        
+        userForm.setLocationRelativeTo(null); //to show the window in the middle of the screen 
+        userForm.setVisible(true); //to open in the window
+    }//GEN-LAST:event_userDonationsBtnActionPerformed
 
     /**
      * @param args the command line arguments
