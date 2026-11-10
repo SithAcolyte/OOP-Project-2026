@@ -4,7 +4,7 @@
  */
 package main;
 
-import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -14,6 +14,10 @@ public class FoodSaverApp {
     
     public static void main(String[] args){
         
-        JOptionPane.showMessageDialog(null, "Welcome to Food Saver!");
+        SwingUtilities.invokeLater(() -> { //create Swing GUI in Event Dispatch Thread
+            MainMenuForm menu = new MainMenuForm(); //creating landing page window
+            menu.setLocationRelativeTo(null); // to set the windown in the midlle of the screen 
+            menu.setVisible(true); // to show the window
+    });
     }
 }
