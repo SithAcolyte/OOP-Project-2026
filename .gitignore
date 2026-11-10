@@ -1,0 +1,16 @@
+/FoodSaver/build/
+
+
+# NetBeans local settings
+**/nbproject/private/
+
+# Generated files
+**/build/
+**/dist/
+
+# Java compiled files
+*.class
+
+# Operating system files
+Thumbs.db
+.DS_Store
