@@ -35,6 +35,7 @@ public class MainMenuForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         foodListingsBtn.setText("Food Listings - Person 1");
+        foodListingsBtn.addActionListener(this::foodListingsBtnActionPerformed);
 
         collectionsBtn.setText("Requests & Collections - Person 2");
         collectionsBtn.addActionListener(this::collectionsBtnActionPerformed);
@@ -70,15 +71,24 @@ public class MainMenuForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void collectionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectionsBtnActionPerformed
-        // TODO add your handling code here:
+        //Opens the Reservation GUI (reservation package)
+        reservation.ReservationGUI resGUI = new reservation.ReservationGUI();
+        resGUI.setLocationRelativeTo(null);
+        resGUI.setVisible(true);
     }//GEN-LAST:event_collectionsBtnActionPerformed
 
     private void userDonationsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDonationsBtnActionPerformed
+        //Opens the User Registration form (users package)
         users.RegisterUserForm userForm = new users.RegisterUserForm(); //to create users registration window
-        
         userForm.setLocationRelativeTo(null); //to show the window in the middle of the screen 
         userForm.setVisible(true); //to open in the window
     }//GEN-LAST:event_userDonationsBtnActionPerformed
+
+    private void foodListingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foodListingsBtnActionPerformed
+        food.FoodListingGUI listingGUI = new food.FoodListingGUI();
+        listingGUI.setLocationRelativeTo(null);
+        listingGUI.setVisible(true);
+    }//GEN-LAST:event_foodListingsBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,4 +120,5 @@ public class MainMenuForm extends javax.swing.JFrame {
     private javax.swing.JButton foodListingsBtn;
     private javax.swing.JButton userDonationsBtn;
     // End of variables declaration//GEN-END:variables
+   
 }
