@@ -72,7 +72,7 @@ public class MainMenuForm extends javax.swing.JFrame {
 
     private void collectionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectionsBtnActionPerformed
         //Opens the Reservation GUI (reservation package)
-        reservation.ReservationGUI resGUI = new reservation.ReservationGUI();
+        Reservation.ReservationGUI resGUI = new Reservation.ReservationGUI();
         resGUI.setLocationRelativeTo(null);
         resGUI.setVisible(true);
     }//GEN-LAST:event_collectionsBtnActionPerformed
