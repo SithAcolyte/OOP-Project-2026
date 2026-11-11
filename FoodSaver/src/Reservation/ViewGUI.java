@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package reservation;
+package Reservation;
 
 /**
  *
@@ -230,6 +230,11 @@ public ViewGUI(ReservationGUI previousPage) {
 
     private void HomebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomebtnActionPerformed
         // TODO add your handling code here:
+        main.MainMenuForm home = new main.MainMenuForm();
+    home.setLocationRelativeTo(null);
+    home.setVisible(true);
+    this.dispose();
+
     }//GEN-LAST:event_HomebtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed

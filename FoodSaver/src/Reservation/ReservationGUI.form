@@ -88,8 +88,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="BackToDashboardBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Back to Dashboard"/>
+        <Property name="text" type="java.lang.String" value="home"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackToDashboardBtnActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="firstPnl">
       <Properties>
