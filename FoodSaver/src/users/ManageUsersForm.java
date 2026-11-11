@@ -85,6 +85,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
         deleteBtn.setText("Delete Selected");
 
         homeBtn.setText("Home");
+        homeBtn.addActionListener(this::homeBtnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,6 +153,13 @@ public class ManageUsersForm extends javax.swing.JFrame {
         new RegisterUserForm().setVisible(true); //open register/edit screen
         this.dispose(); //close current Manage Users window
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        main.MainMenuForm menu = new main.MainMenuForm();
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_homeBtnActionPerformed
 
     /**
      * @param args the command line arguments
