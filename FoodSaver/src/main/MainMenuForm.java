@@ -72,22 +72,25 @@ public class MainMenuForm extends javax.swing.JFrame {
 
     private void collectionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectionsBtnActionPerformed
         //Opens the Reservation GUI (reservation package)
-        Reservation.ReservationGUI resGUI = new Reservation.ReservationGUI();
-        resGUI.setLocationRelativeTo(null);
-        resGUI.setVisible(true);
+        //Reservation.ReservationGUI resGUI = new Reservation.ReservationGUI();
+        //resGUI.setLocationRelativeTo(null);
+        //resGUI.setVisible(true);
+        new Reservation.ReservationGUI().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_collectionsBtnActionPerformed
 
     private void userDonationsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDonationsBtnActionPerformed
         //Opens the User Registration form (users package)
-        users.RegisterUserForm userForm = new users.RegisterUserForm(); //to create users registration window
-        userForm.setLocationRelativeTo(null); //to show the window in the middle of the screen 
-        userForm.setVisible(true); //to open in the window
+        //users.RegisterUserForm userForm = new users.RegisterUserForm(); //to create users registration window
+        // userForm.setLocationRelativeTo(null); //to show the window in the middle of the screen 
+        //userForm.setVisible(true); //to open in the window
+        new users.RegisterUserForm().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_userDonationsBtnActionPerformed
 
     private void foodListingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foodListingsBtnActionPerformed
-        food.FoodListingGUI listingGUI = new food.FoodListingGUI();
-        listingGUI.setLocationRelativeTo(null);
-        listingGUI.setVisible(true);
+        new food.FoodListingGUI().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_foodListingsBtnActionPerformed
 
     /**
