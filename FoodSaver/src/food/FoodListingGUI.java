@@ -77,11 +77,13 @@ public class FoodListingGUI extends JFrame {
         JButton updateButton = new JButton("Update Price");
         JButton deleteButton = new JButton("Delete Selected");
         JButton clearButton = new JButton("Clear Fields");
+        JButton homeButton = new JButton("Home/Menu");
         
         buttonPanel.add(addButton);
         buttonPanel.add(updateButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(clearButton);
+        buttonPanel.add(homeButton);
         
         JPanel southPanel = new JPanel(new BorderLayout());
         southPanel.add(controlPanel, BorderLayout.CENTER);
@@ -155,6 +157,11 @@ public class FoodListingGUI extends JFrame {
         });
         
         clearButton.addActionListener(e -> clearFields());
+        
+        homeButton.addActionListener(e -> {
+            new main.MainMenuForm().setVisible(true);
+            this.dispose();
+        });
         
         loadSampleData();
         
