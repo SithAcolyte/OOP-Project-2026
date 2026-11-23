@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package reservation;
+package Reservation;
 
 /**
  *
@@ -56,7 +56,8 @@ public class ReservationGUI extends javax.swing.JFrame {
 
         NewRequestBtn.setText("+ New Request");
 
-        BackToDashboardBtn.setText("Back to Dashboard");
+        BackToDashboardBtn.setText("home");
+        BackToDashboardBtn.addActionListener(this::BackToDashboardBtnActionPerformed);
 
         firstPnl.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -230,14 +231,14 @@ public class ReservationGUI extends javax.swing.JFrame {
                                 .addComponent(AllBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(CompleteBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(BackToDashboardBtn)
                                 .addGap(37, 37, 37)
                                 .addComponent(NewRequestBtn))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ActiveBtn)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(firstPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -287,6 +288,15 @@ public class ReservationGUI extends javax.swing.JFrame {
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ViewVBtn1ActionPerformed
+
+    private void BackToDashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToDashboardBtnActionPerformed
+                                              
+    main.MainMenuForm home = new main.MainMenuForm();
+    home.setLocationRelativeTo(null);
+    home.setVisible(true);
+    this.dispose();
+
+    }//GEN-LAST:event_BackToDashboardBtnActionPerformed
 
     /**
      * @param args the command line arguments

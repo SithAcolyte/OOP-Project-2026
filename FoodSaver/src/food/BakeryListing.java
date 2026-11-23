@@ -24,7 +24,7 @@ public class BakeryListing extends FoodListing {
     }   
         @Override
         public String getDetails() {
-            return "Meal Listing [ID: " + ", Title: " + title + ", Baked Date: " 
+            return "Bakery Listing [ID: " + listingID + ", Title: " + title + ", Baked Date: " 
             + bakedDate + ", Allergens Present: " + containsAllergens + ", Price: €" + discountedPrice 
             + " (Was €" + originalPrice + ")]";
         }

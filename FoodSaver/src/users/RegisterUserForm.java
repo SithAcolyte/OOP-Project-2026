@@ -154,6 +154,7 @@ public class RegisterUserForm extends javax.swing.JFrame {
         clearBtn.setText("Clear");
 
         homeBtn.setText("Home");
+        homeBtn.addActionListener(this::homeBtnActionPerformed);
 
         manageUsersBtn.setText("Manage Users");
         manageUsersBtn.addActionListener(this::manageUsersBtnActionPerformed);
@@ -259,6 +260,13 @@ public class RegisterUserForm extends javax.swing.JFrame {
         new ManageUsersForm().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageUsersBtnActionPerformed
+
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        main.MainMenuForm menu = new main.MainMenuForm();
+        menu.setLocationRelativeTo(null); //make sure it is in the center of the screen
+        menu.setVisible(true); //open mainMenu
+        this.dispose(); //close the current form
+    }//GEN-LAST:event_homeBtnActionPerformed
 
     /**
      * @param args the command line arguments

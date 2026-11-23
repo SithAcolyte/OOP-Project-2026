@@ -26,7 +26,7 @@ public double calculateDiscount() {
 
 @Override
 public String getDetails() {
-    return "Meal Listing [ID: " + ", Title: " + title + ", Dietary: "
+    return "Meal Listing [ID: " + listingID + ", Title: " + title + ", Dietary: "
             + dietaryType + ", Ready By: " + prepTime + ", Price: €" + discountedPrice 
             + " (Was €" + originalPrice + ")]";
 }
