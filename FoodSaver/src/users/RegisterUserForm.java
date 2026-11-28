@@ -9,29 +9,62 @@ package users;
  * @author hteto
  */
 public class RegisterUserForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegisterUserForm.class.getName());
 
     /**
      * Creates new form RegisterUserForm
      */
+    //keey the manager that his form uses to access userList
+    private final UserManager userManager; //userManager field
+    private User editingUser;
+
+    //Constuctor : use the shared manager when opening this from the main menu
     public RegisterUserForm() {
-        initComponents();
-        
-        updateUserPanels(); //to define userType
+        this(new UserManager());
+    }
+
+    public void loadUserForEditing(User user) {
+        editingUser = user;
+
+        nameTF.setText(user.getName());
+        phoneTF.setText(user.getPhone());
+        emailTF.setText(user.getEmail());
+
+        if (user instanceof Donor) {
+            Donor donor = (Donor) user;
+            userTypeComboBox.setSelectedItem("Donor");
+            collectionAddressTF.setText(donor.getCollectionAddress());
+            collectionInstructionsTA.setText(donor.getCollectionInstructions());
+        } else if (user instanceof Recipient) {
+            Recipient recipient = (Recipient) user;
+            userTypeComboBox.setSelectedItem("Recipient");
+            collectionMethodComboBox.setSelectedItem(
+                    recipient.getPreferredCollectionMethod());
+        }
+
+        userTypeComboBox.setEnabled(false);
+        registerBtn.setEnabled(false);
+    }
+
+    //use the manager passes in by another form
+    public RegisterUserForm(UserManager userManager) {
+        this.userManager = userManager;
+        initComponents(); //create the buttons, text fileds and panels
+        updateUserPanels(); //to define the selected userType
     }
 
     //
-    private void updateUserPanels(){
+    private void updateUserPanels() {
         boolean isDonor = "Donor".equals(userTypeComboBox.getSelectedItem());
-        
+
         donorPanel.setVisible(isDonor);
         recipientPanel.setVisible(!isDonor);
-        
+
         revalidate();
         repaint();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,10 +181,13 @@ public class RegisterUserForm extends javax.swing.JFrame {
         );
 
         registerBtn.setText("Register");
+        registerBtn.addActionListener(this::registerBtnActionPerformed);
 
         updateBtn.setText("Update");
+        updateBtn.addActionListener(this::updateBtnActionPerformed);
 
         clearBtn.setText("Clear");
+        clearBtn.addActionListener(this::clearBtnActionPerformed);
 
         homeBtn.setText("Home");
         homeBtn.addActionListener(this::homeBtnActionPerformed);
@@ -251,13 +287,13 @@ public class RegisterUserForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
-      
+
         updateUserPanels(); //to callthe method for related panel
-        
+
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
 
     private void manageUsersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersBtnActionPerformed
-        new ManageUsersForm().setVisible(true);
+        new ManageUsersForm(userManager).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageUsersBtnActionPerformed
 
@@ -267,6 +303,102 @@ public class RegisterUserForm extends javax.swing.JFrame {
         menu.setVisible(true); //open mainMenu
         this.dispose(); //close the current form
     }//GEN-LAST:event_homeBtnActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        String name = nameTF.getText().trim();
+        String phone = phoneTF.getText().trim();
+        String email = emailTF.getText().trim();
+
+        if (name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this, "Please enter a name, phone number and email.");
+            return;
+        }
+
+        String id = java.util.UUID.randomUUID().toString();
+        User user;
+
+        if ("Donor".equals(userTypeComboBox.getSelectedItem())) {
+            String address = collectionAddressTF.getText().trim();
+            String instructions = collectionInstructionsTA.getText().trim();
+
+            if (address.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this, "Please enter a collection address");
+                return;
+            }
+
+            user = new Donor(id, name, phone, email, address, instructions);
+        } else {
+            String method = (String) collectionMethodComboBox.getSelectedItem();
+            user = new Recipient(id, name, phone, email, method);
+        }
+
+        userManager.addUser(user); //add profile in the arrayList
+        new ManageUsersForm(userManager).setVisible(true); //can see anew profile
+        this.dispose();
+    }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        if (editingUser == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Open a profile using Edit Selected first.");
+            return;
+        }
+
+        String name = nameTF.getText().trim();
+        String phone = phoneTF.getText().trim();
+        String email = emailTF.getText().trim();
+
+        if (name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Please enter a name, phone number and email.");
+            return;
+        }
+
+        if (editingUser instanceof Donor) {
+            String address = collectionAddressTF.getText().trim();
+
+            if (address.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Please enter a collection address.");
+                return;
+            }
+
+            Donor donor = (Donor) editingUser;
+            donor.updateCollectionDetails(
+                    address, collectionInstructionsTA.getText().trim());
+        } else if (editingUser instanceof Recipient) {
+            Recipient recipient = (Recipient) editingUser;
+            recipient.setPreferredCollectionMethod(
+                    (String) collectionMethodComboBox.getSelectedItem());
+        }
+
+        editingUser.setName(name);
+        editingUser.updateContactDetail(phone, email);
+
+        new ManageUsersForm(userManager).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+       System.out.println("Clear clicked");
+        if (editingUser != null) {
+            loadUserForEditing(editingUser);
+            return;
+        }
+
+        nameTF.setText("");
+        phoneTF.setText("");
+        emailTF.setText("");
+        collectionAddressTF.setText("");
+        collectionInstructionsTA.setText("");
+
+        userTypeComboBox.setSelectedItem("Donor");
+        collectionMethodComboBox.setSelectedItem("Self-pickup");
+        updateUserPanels();
+        nameTF.requestFocusInWindow();
+    }//GEN-LAST:event_clearBtnActionPerformed
 
     /**
      * @param args the command line arguments

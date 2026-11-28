@@ -11,14 +11,52 @@ package users;
 public class ManageUsersForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ManageUsersForm.class.getName());
-
+    
+    private final UserManager userManager;
+    
+    public ManageUsersForm(){
+        this(new UserManager());
+    }
     /**
      * Creates new form ManageUsersForm
+     * @param userManager
      */
-    public ManageUsersForm() {
+    public ManageUsersForm(UserManager userManager) {
+        this.userManager = userManager;
         initComponents();
+        displayUsers();
     }
+    
+    private void displayUsers() {
+    javax.swing.table.DefaultTableModel model =
+            (javax.swing.table.DefaultTableModel) usersTable.getModel();
 
+    model.setRowCount(0);
+    
+    String query = searchTF.getText().trim().toLowerCase(java.util.Locale.ROOT);
+
+    for (User user : userManager.getUsers()) {
+        
+        String name = user.getName().toLowerCase(java.util.Locale.ROOT);
+        String id = user.getUserID().toLowerCase(java.util.Locale.ROOT);
+        
+        if(!query.isEmpty() && !name.contains(query) && !id.contains(query)){
+            continue;
+        }
+        
+        String role;
+        if (user instanceof Donor) {
+            role = "Donor";
+        } else {
+            role = "Recipient";
+        }
+
+        model.addRow(new Object[] {
+            user.getUserID(), user.getName(), role,
+            user.getPhone(), user.getEmail()
+    });
+    }//close the for loop
+    } //close displayUsers()
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +84,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
         searchLbl.setText("Search by User ID or Name");
 
         searchBtn.setText("Search");
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
 
         usersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,6 +122,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
         editBtn.addActionListener(this::editBtnActionPerformed);
 
         deleteBtn.setText("Delete Selected");
+        deleteBtn.addActionListener(this::deleteBtnActionPerformed);
 
         homeBtn.setText("Home");
         homeBtn.addActionListener(this::homeBtnActionPerformed);
@@ -145,13 +185,30 @@ public class ManageUsersForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerNewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerNewBtnActionPerformed
-        new RegisterUserForm().setVisible(true);
+        new RegisterUserForm(userManager).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_registerNewBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        new RegisterUserForm().setVisible(true); //open register/edit screen
-        this.dispose(); //close current Manage Users window
+        int row = usersTable.getSelectedRow();
+
+        if (row == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Select a user first.");
+            return;
+        }
+
+        int modelRow = usersTable.convertRowIndexToModel(row);
+        String userID = (String) usersTable.getModel().getValueAt(modelRow, 0);
+
+        for (User user : userManager.getUsers()) {
+            if (user.getUserID().equals(userID)) {
+                RegisterUserForm form = new RegisterUserForm(userManager);
+                form.loadUserForEditing(user);
+                form.setVisible(true);
+                dispose();
+                return;
+            }
+        }
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
@@ -160,6 +217,31 @@ public class ManageUsersForm extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_homeBtnActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        displayUsers();
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int row = usersTable.getSelectedRow();
+        
+        if (row == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Select a user first");
+            return;
+        }
+        
+        int modelRow = usersTable.convertRowIndexToModel(row);
+        String userID = (String) usersTable.getModel().getValueAt(modelRow, 0);
+        
+        int choice = javax.swing.JOptionPane.showConfirmDialog(
+            this, "Delete the selected user? " , "Confirm Delete",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if(choice == javax.swing.JOptionPane.YES_OPTION){
+            userManager.deleteUser(userID);
+            displayUsers();
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,4 +280,8 @@ public class ManageUsersForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane usersScrollPane;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
+
+    //private void initComponents() {
+      //  throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    //}
 }

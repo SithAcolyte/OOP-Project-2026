@@ -41,7 +41,7 @@ public class Donor extends User {
     
     @Override
     public String getDetails(){
-        return super.getDetails() + "\nCollection Address: " + collectionAddress + "\nCollection Address: " + collectionInstructions;
+        return super.getDetails() + "\nCollection Address: " + collectionAddress+ "\nCollection Instructions: " + collectionInstructions;
     }
     
 }
